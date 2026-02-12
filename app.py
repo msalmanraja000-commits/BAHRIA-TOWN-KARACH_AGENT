@@ -91,7 +91,9 @@ st.divider()
 st.markdown("""
     <div style='text-align: center; color: #6e7681; font-size: 11px;'>
         © 2026 PropTecSolutions | Salman Raja (Founder & CEO) <br>
-        Proprietary Intelligence Framework. This software is licensed exclusively to Red Box Estate.
+        <strong>Confidential & Proprietary.</strong> <br>
+        Unauthorized access or replication of this AI architecture is strictly prohibited. 
+        Access is subject to terms of service under PropTecSolutions.
     </div>
     """, unsafe_allow_html=True)
  
