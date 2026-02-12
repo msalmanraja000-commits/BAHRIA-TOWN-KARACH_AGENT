@@ -74,30 +74,40 @@ for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
+# --- Chat Logic mein ye tabdeeli karein ---
+
 if prompt := st.chat_input("Analyze Phase 8 vs Precinct 10..."):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
+    # ... (baqi search wala code wahi rahega)
 
     with st.chat_message("assistant"):
-        with st.status("Accessing Private Market Data...", expanded=False):
-            intel = fetch_corporate_intel(prompt, sector)
-        
-        system_msg = f"""
-        Identity: Senior Real Estate Strategist for High-Net-Worth Individuals.
-        Focus: {sector}. 
-        Context: {intel}
-        Rule: If comparing DHA and Bahria, provide a Table. 
-        Formatting: Use bold headers and clean bullet points.
-        Ending: Always offer a 'Strategic Site Visit'.
-        """
-        
+        # AI Response
         completion = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "system", "content": system_msg}] + st.session_state.messages
         )
         
-        response = completion.choices[0].message.content
-        st.markdown(response)
+        full_response = completion.choices[0].message.content
         
-    st.session_state.messages.append({"role": "assistant", "content": response})
+        # Maxout Logic: Score nikalne ka tarika
+        import re
+        try:
+            # AI ke jawab se "SCORE:85" jaisa text dhoondna
+            found_score = re.search(r"SCORE:(\d+)", full_response)
+            if found_score:
+                new_score = int(found_score.group(1))
+                st.session_state.market_score = new_score # Score update ho gaya!
+        except:
+            st.session_state.market_score = 78 # Default agar AI bhool jaye
+            
+        st.markdown(full_response)
+
+# --- Sidebar mein Gauge Chart ko update karein ---
+if "market_score" not in st.session_state:
+    st.session_state.market_score = 78 # Shuruat mein 78
+
+# Gauge Chart mein value ko session_state se connect karein
+fig.add_trace(go.Indicator(
+    mode = "gauge+number",
+    value = st.session_state.market_score, # Ab ye move karega!
+    # ... baqi settings wahi
+))
