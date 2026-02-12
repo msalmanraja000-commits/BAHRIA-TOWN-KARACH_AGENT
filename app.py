@@ -4,20 +4,44 @@ from tavily import TavilyClient
 import pandas as pd
 import plotly.graph_objects as go
 
-# 1. Page Config with Ultra-Black Corporate Theme
-st.set_page_config(page_title="Karachi Real Estate Intelligence", page_icon="🏛️", layout="wide")
-
 st.markdown("""
     <style>
-    .stApp { background-color: #000000; color: #ffffff !important; font-family: 'Segoe UI', sans-serif; }
-    h1, h2, h3, p, span, label { color: #ffffff !important; font-weight: 300; }
-    .stChatMessage { background-color: #111111; border: 0.5px solid #333; border-radius: 4px; padding: 20px; }
-    .stMetric { border-left: 3px solid #00ffcc; padding-left: 10px; }
-    /* Corporate Table Style */
-    .styled-table { margin: 25px 0; font-size: 0.9em; min-width: 400px; color: white; }
+    /* 1. Global Dark Theme */
+    .stApp { 
+        background-color: #000000; 
+        color: #ffffff !important; 
+        font-family: 'Segoe UI', sans-serif; 
+    }
+
+    /* 2. Sidebar Force White Text & Black Background */
+    [data-testid="stSidebar"] {
+        background-color: #000000 !important;
+        border-right: 1px solid #333;
+    }
+
+    /* Making "Elite Analytics" and all Sidebar headers Crystal White */
+    [data-testid="stSidebar"] h1, 
+    [data-testid="stSidebar"] h2, 
+    [data-testid="stSidebar"] h3, 
+    [data-testid="stSidebar"] p, 
+    [data-testid="stSidebar"] span, 
+    [data-testid="stSidebar"] label {
+        color: #ffffff !important;
+        opacity: 1 !important;
+    }
+
+    /* 3. Chat Messages Styling */
+    .stChatMessage { 
+        background-color: #111111; 
+        border: 0.5px solid #444; 
+        border-radius: 8px; 
+        padding: 15px; 
+    }
+
+    /* 4. Gauge Chart Label Color */
+    .js-line { stroke: white !important; }
     </style>
     """, unsafe_allow_html=True)
-
 # 2. Secure Initialization
 client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 tavily = TavilyClient(api_key=st.secrets["TAVILY_API_KEY"])
