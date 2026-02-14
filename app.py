@@ -8,17 +8,25 @@ st.set_page_config(page_title="BTK Intelligence | PropTec", page_icon="🏙️",
 
 st.markdown("""
     <style>
-    [data-testid="stHeader"], header, footer, .stAppDeployButton, #MainMenu {display: none !important; visibility: hidden !important;}
-    .viewerBadge_container__1QSob { display: none !important; }
-    .stApp { background-color: #0E1117; }
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    footer {visibility: hidden;}
+    .stAppDeployButton {display:none;}
+    [data-testid="stHeader"] {display:none;}
+    .viewerBadge_container__1QSob {display:none;}
+    .stAppToolbar {display:none;}
+    
+    /* Mobile optimization */
+    .block-container { padding-top: 0rem !important; }
+    
     .custom-footer {
         position: fixed; left: 0; bottom: 0; width: 100%; 
-        background-color: #161B22; color: #FFD700; 
-        text-align: center; padding: 10px; font-size: 13px; 
-        border-top: 2px solid #FFD700; z-index: 999;
+        background-color: #0E1117; color: #00FFAA; 
+        text-align: center; padding: 10px; font-size: 12px; 
+        border-top: 1px solid #00FFAA; z-index: 999;
     }
     </style>
-    <div class="custom-footer">© 2026 PropTecSolutions | BTK AI Strategic Framework | Founder: Salman Raja</div>
+    <div class="custom-footer">© 2026 PropTecSolutions | Powered by Salman Raja AI</div>
     """, unsafe_allow_html=True)
 
 # --- 📊 CORE INTERFACE ---
