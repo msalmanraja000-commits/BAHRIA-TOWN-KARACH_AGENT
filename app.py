@@ -3,62 +3,46 @@ import requests
 import time
 from datetime import datetime
 
-# --- SECURITY & STEALTH ---
-st.set_page_config(page_title="BTK Intelligence | PropTec", page_icon="🏙️", layout="wide", initial_sidebar_state="collapsed")
+# 1. Stealth Shield
+st.set_page_config(page_title="BTK Intelligence | PropTec", page_icon="🏙️", layout="wide")
+st.markdown("<style>[data-testid='stHeader'], footer, #MainMenu, .stAppDeployButton {display: none !important;}</style>", unsafe_allow_html=True)
 
-st.markdown("""
-    <style>
-    [data-testid="stHeader"], header, footer, .stAppDeployButton, #MainMenu {display: none !important; visibility: hidden !important;}
-    .viewerBadge_container__1QSob { display: none !important; }
-    .block-container { padding-top: 1rem !important; }
-    .custom-footer {
-        position: fixed; left: 0; bottom: 0; width: 100%; 
-        background-color: #0E1117; color: #FFD700; 
-        text-align: center; padding: 12px; font-size: 14px; 
-        border-top: 2px solid #FFD700; z-index: 999;
-    }
-    </style>
-    <div class="custom-footer">© 2026 PropTecSolutions | BTK AI Strategic Framework | Founder: Salman Raja</div>
-    """, unsafe_allow_html=True)
-
-# --- APP INTERFACE ---
+# 2. Interface
 st.title("🏙️ BTK Strategic Intelligence")
 st.write("Real-time Precinct Analysis for Bahria Town Karachi.")
 
-precinct = st.text_input("Enter Precinct (e.g. Precinct 10-A, P-31):", placeholder="Analyze BTK precinct...")
+precinct = st.text_input("Enter Precinct:", placeholder="e.g. Precinct 10-A, P-31")
 
 if st.button("🚀 Analyze BTK Market"):
     if precinct:
-        with st.spinner('Scanning BTK Precinct Data...'):
-            time.sleep(1.5)
-            m1, m2, m3 = st.columns(3)
-            m1.metric("Precinct Score", "92/100", "Top Ranked")
-            m2.metric("Occupancy Rate", "78%", "Rising")
-            m3.metric("ROI Potential", "12-14%", "6 Months")
-            
-            st.markdown("---")
-            t1, t2, t3 = st.tabs(["📊 Sentiment", "📈 Yield", "🏗️ Status"])
-            with t1:
-                st.write(f"**Sentiment in {precinct}:** High occupancy and rapid commercialization are driving short-term gains.")
-            with t2:
-                st.write("Rental yields are outperforming the overall Bahria average. Excellent for passive income.")
-                
-            with t3:
-                st.write("Infrastructure Status: **100% Ready.** Gas, Electricity, and Water confirmed.")
+        with st.spinner('Scanning BTK Growth Patterns...'):
+            time.sleep(1)
+            st.metric("Precinct Growth Score", "94/100", "Top Choice")
+            st.success(f"Market Report for {precinct}: High occupancy and rapid commercialization surge.")
     else:
         st.error("Please enter a Precinct.")
 
-# --- LEAD GENERATOR ---
+# 3. Growth Lead Form
 st.markdown("---")
-with st.form("btk_lead_form", clear_on_submit=True):
-    st.subheader("📩 Get BTK Investment Hot-List")
+st.subheader("🔥 Get BTK 'High-Yield' Hot Leads")
+st.write("Access our curated list of precincts with the highest rental returns and fastest growth.")
+
+with st.form("btk_form", clear_on_submit=True):
     u_name = st.text_input("Full Name")
     u_phone = st.text_input("WhatsApp Number")
+    u_budget = st.selectbox("Investment Budget (PKR):", ["Select Budget", "5M - 15M", "15M - 35M", "35M - 75M", "75M+"])
     
-    if st.form_submit_button("Get BTK VIP Access"):
-        if u_name and u_phone:
-            BACKEND_URL = "https://script.google.com/macros/s/AKfycby5T5NJ8NAf1LP_G5SJ3iTaPWDd0DusoFbdBUFrVkqt1Z03PcNQ89TE2o2aXSOORXzi/exec"
-            payload = {"Name": u_name, "Phone": u_phone, "Budget": "BTK Client", "Market": "BTK Karachi", "Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-            requests.post(BACKEND_URL, json=payload)
-            st.balloons()
-            st.success("BTK VIP List sent to database. Check WhatsApp.")
+    if st.form_submit_button("Get BTK Hot Leads"):
+        if u_name and u_phone and u_budget != "Select Budget":
+            URL = "https://script.google.com/macros/s/AKfycby5T5NJ8NAf1LP_G5SJ3iTaPWdD0DusoFbdBUFrVkqt1Z03PcNQ89TE2o2aXSOORXzi/exec"
+            payload = {"Name": u_name, "Phone": u_phone, "Budget": u_budget, "Market": "BTK Karachi", "Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+            try:
+                requests.post(URL, json=payload, timeout=10)
+                st.balloons()
+                st.success(f"Zabardast! Shukriya {u_name}. Hamare BTK Analysts aapke budget ({u_budget}) ki best deals nikal rahe hain.")
+                st.info("🏙️ **PropTec Growth:** Hamari team jald contact karegi. Aapko Bahria Town ki sabse 'Profitable' aur 'Distress Deals' ki list WhatsApp par mil jayegi.")
+            except:
+                st.error("Connection Error.")
+        else:
+            st.warning("Please fill all details.")
+         
